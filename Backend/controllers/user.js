@@ -2,19 +2,24 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+require('dotenv').config();
+
+const key = process.env.APPTOKEN;
+
+
 exports.signup = (req, res, next) => {
-    console.log ("signup")
-  bcrypt
+    bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
-      const user = new User({
-        email: req.body.email,
-        password: hash,
-      });
+        const user = new User({
+            email: req.body.email,
+            password: hash,
+        });
+        console.log (user)
       user
         .save()
         .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
-        .catch((error) => res.status(400).json({ error }));
+        //.catch((error) => res.status(400).json({ error : "je suis une erreur" }));
     })
     .catch((error) => res.status(500).json({ error }));
 };
@@ -34,10 +39,10 @@ exports.login = (req, res, next) => {
                       userId: user._id,
                       token: jwt.sign(
                           { userId: user._id },
-                          'RANDOM_TOKEN_SECRET',
+                          key,
                           { expiresIn: '24h' }
                       )
-                  });
+                    });
               })
               .catch(error => res.status(500).json({ error }));
       })

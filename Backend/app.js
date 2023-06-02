@@ -8,7 +8,7 @@ const userRoutes = require("./routes/user");
 
 mongoose
   .connect(
-    "mongodb+srv://[sqlUser]:sqlPassword@cluster0.ykcu8qz.mongodb.net/?retryWrites=true&w=majority",
+    "mongodb+srv://" + sqlUser + ":" + sqlPassword + "@cluster0.ykcu8qz.mongodb.net/?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))

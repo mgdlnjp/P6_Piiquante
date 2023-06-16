@@ -6,15 +6,19 @@ require('dotenv').config();
 const sqlUser = process.env.SQL_USER;
 const sqlPassword = process.env.SQL_PASSWORD;
 
-const userRoutes = require("./routes/user");
+const path = require('path');
 
-const bd = "mongodb+srv://" + sqlUser + ":" + sqlPassword + "@cluster0.ykcu8qz.mongodb.net/?retryWrites=true&w=majority"
+const userRoutes = require("./routes/user");
+const saucesRoutes = require("./routes/sauces");
+
+
+const db = "mongodb+srv://" + sqlUser + ":" + sqlPassword + "@cluster0.ykcu8qz.mongodb.net/Piiquantes?retryWrites=true&w=majority"
 
 mongoose
   .connect(
     //console.log("mongodb+srv://" + sqlUser + ":" + sqlPassword + "@cluster0.ykcu8qz.mongodb.net/?retryWrites=true&w=majority"),
     //"mongodb+srv://magdeleinejpierre:Openclassrooms@cluster0.ykcu8qz.mongodb.net/?retryWrites=true&w=majority",
-    bd,
+    db,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
@@ -61,5 +65,7 @@ app.use((req, res, next) => {
 
 
 app.use("/api/auth", userRoutes);
+app.use("/api/sauces", saucesRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;

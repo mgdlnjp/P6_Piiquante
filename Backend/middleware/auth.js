@@ -2,11 +2,12 @@ const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 
-const key = APPTOKEN;
+const key = process.env.APPTOKEN;
 
  
 module.exports = (req, res, next) => {
    try {
+    console.log("middle")
        const token = req.headers.authorization.split(' ')[1];
        console.log(token);
 

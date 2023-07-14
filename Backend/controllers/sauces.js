@@ -106,7 +106,9 @@ exports.getAllSauces = (req, res, next) => {
     switch(likesauce){
       case 1:
         console.log("tu as liké");
-        Sauce.updateOne({{ _id: req.params.id}})
+        Sauce.updateOne({ _id: idsauce}, {$push: {usersLiked: {iduser}}})
+              .then(() => res.status(200).json({message : 'Sauce likée!'}))
+              .catch(error => res.status(401).json({ error }));
         break;
         case -1:
           console.log ("tu as pas disliké");

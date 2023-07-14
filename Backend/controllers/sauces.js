@@ -1,4 +1,6 @@
 const Sauce = require('../models/sauces');
+const fs = require ('fs') 
+
 
 
 exports.createSauces = (req, res, next) => {
@@ -49,14 +51,14 @@ exports.getAllSauces = (req, res, next) => {
     );
   };
 
-  exports.modifySauce = (req, res, next) => {
-    const thingObject = req.file ? {
+  exports.modifySauces = (req, res, next) => {
+     const sauceObject = req.file ? {
       ...JSON.parse(req.body.sauce),
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   } : { ...req.body };
   
-  delete sauceObject._userId;
-  Thing.findOne({_id: req.params.id})
+  //delete sauceObject._userId;
+  Sauce.findOne({_id: req.params.id})
       .then((sauce) => {
           if (sauce.userId != req.auth.userId) {
               res.status(401).json({ message : 'Not authorized'});
@@ -71,7 +73,7 @@ exports.getAllSauces = (req, res, next) => {
       });
   };
   
-  exports.deleteSauce = (req, res, next) => {
+  exports.deleteSauces = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id})
     .then(sauce => {
         if (sauce.userId != req.auth.userId) {
@@ -85,7 +87,48 @@ exports.getAllSauces = (req, res, next) => {
             });
         }
     })
-    .catch( error => {
+     .catch( error => {
         res.status(500).json({ error });
-    });
+    }); 
   };
+
+  exports.likeSauces = (req, res, next) => {
+    console.log(req.body.like);
+    console.log(req.body);
+    console.log(req.params);
+
+    let likesauce = req.body.like;
+    let iduser = req.body.userId;
+    let idsauce = req.params.id;
+    //let sauceId = sauce.userId;
+
+
+    switch(likesauce){
+      case 1:
+        console.log("tu as liké");
+        Sauce.updateOne({{ _id: req.params.id}})
+        break;
+        case -1:
+          console.log ("tu as pas disliké");
+          break;
+
+
+        case 0:
+
+          break;
+          default:
+            console.log("erreur pas autorisé");
+    }
+    
+/*     Sauce.findOne({ _id: req.params.id })
+.then((sauce) =>{
+  if (sauce.userId != req.auth.userId) {
+    return Promise.reject("Unauthorized");
+  }
+
+}
+) */
+    
+
+
+  }

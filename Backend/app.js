@@ -1,18 +1,22 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const sqlUser = process.env.SQL_USER;
 const sqlPassword = process.env.SQL_PASSWORD;
 
-const path = require('path');
+const path = require("path");
 
 const userRoutes = require("./routes/user");
 const saucesRoutes = require("./routes/sauces");
 
-
-const db = "mongodb+srv://" + sqlUser + ":" + sqlPassword + "@cluster0.ykcu8qz.mongodb.net/Piiquantes?retryWrites=true&w=majority"
+const db =
+  "mongodb+srv://" +
+  sqlUser +
+  ":" +
+  sqlPassword +
+  "@cluster0.ykcu8qz.mongodb.net/Piiquantes?retryWrites=true&w=majority";
 
 mongoose
   .connect(
@@ -63,9 +67,8 @@ app.use((req, res, next) => {
   console.log("Réponse envoyée avec succès !");
 }); */
 
-
 app.use("/api/auth", userRoutes);
 app.use("/api/sauces", saucesRoutes);
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 module.exports = app;

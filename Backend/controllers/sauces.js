@@ -113,7 +113,7 @@ exports.likeSauces = (req, res, next) => {
   //let sauceId = sauce.userId;
 
   switch (likeSauce) {
-    case +1:
+    case +1: //peut etre mettre condition
       console.log("tu as liké");
       Sauce.updateOne(
         { _id: idSauce },
@@ -122,7 +122,7 @@ exports.likeSauces = (req, res, next) => {
         .then(() => res.status(200).json({ message: "Sauce likée!" }))
         .catch((error) => res.status(401).json({ error }));
       break;
-    case -1:
+    case -1: //peut etre mettre condition
       console.log("tu as disliké");
       Sauce.updateOne(
         { _id: idSauce },
@@ -132,18 +132,18 @@ exports.likeSauces = (req, res, next) => {
         .catch((error) => res.status(401).json({ error }));
       break;
 
-    case 0:
-
+    case 0: 
+    //peut etre mettre condition
       Sauce.updateOne(
         { _id: idSauce },
-        { $inc: { likes: -1 }, $push: { usersLiked: { idUser } } } //peut etre pull
+        { $inc: { likes: -1 }, $push: { usersLiked: { idUser } } } //peut etre mettre pull
       )
         .then(() => res.status(200).json({ message: "Sauce likée!" }))
         .catch((error) => res.status(401).json({ error }));
-
+    //peut etre mettre condition
       Sauce.updateOne(
         { _id: idSauce },
-        { $inc: { dislikes: +1 }, $push: { usersDisliked: { idUser } } }//peut etre pull
+        { $inc: { dislikes: +1 }, $push: { usersDisliked: { idUser } } } //peut etre mettre pull
       )
         .then(() => res.status(200).json({ message: "Sauce dislikée!" }))
         .catch((error) => res.status(401).json({ error }));

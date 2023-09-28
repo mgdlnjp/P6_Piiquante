@@ -1,10 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const userCtrl = require("../controllers/user");
 
-const userCtrl = require('../controllers/user');
+//CRUD utilisateur
+router.post("/signup", userCtrl.signup);
+router.post("/login", userCtrl.login);
 
-router.post('/signup', userCtrl.signup);
-router.post('/login', userCtrl.login);
-
-
-module.exports = router;
+module.exports = router;//exportation vers express

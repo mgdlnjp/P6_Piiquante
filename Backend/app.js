@@ -14,13 +14,13 @@ const db = //lien vers la base de donnée Mongoose de l'utilisateur
   sqlPassword +
   "@cluster0.ykcu8qz.mongodb.net/Piiquantes?retryWrites=true&w=majority";
 
-// connexion au Mongoose de l'utilisateur
+//connexion au Mongoose de l'utilisateur
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
-// connexion EXPRESS
+//connexion EXPRESS
 const app = express();
 app.use(express.json());
 

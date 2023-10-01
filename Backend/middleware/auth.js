@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+require("dotenv").config();//permet de récuperer le fichier .env dans le dossier
 const key = process.env.APPTOKEN;
 
 module.exports = (req, res, next) => {

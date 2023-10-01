@@ -11,7 +11,7 @@ exports.createSauces = (req, res, next) => {
     imageUrl: `${req.protocol}://${req.get("host")}/images/${
       req.file.filename
     }`,
-    //ajout du Like et Dislike
+    //initialisation du Like et Dislike
     likes: 0,
     dislikes: 0,
     usersLiked: [" "],
@@ -91,7 +91,7 @@ exports.deleteSauces = (req, res, next) => {
         const filename = sauce.imageUrl.split("/images/")[1];
         fs.unlink(`images/${filename}`, () => {
           //chemin du chemin de l'image
-          Sauce.deleteOne({ _id: req.params.id }) //supp des propriétés de la sauce
+          Sauce.deleteOne({ _id: req.params.id }) //suppression de la sauce
             .then(() => {
               res.status(200).json({ message: "Sauce supprimée !" });
             })

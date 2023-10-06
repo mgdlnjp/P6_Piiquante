@@ -1,5 +1,8 @@
 # Ignorer les fichiers liés aux clés d'API
-.env
+*.env
+
+# Ignorer le dossier node_modules
+node_modules
 
 # JPEG
 *.jpg

@@ -73,7 +73,22 @@ exports.modifySauces = (req, res, next) => {
           { _id: req.params.id },
           { ...sauceObject, _id: req.params.id } //update de toute les propriétes de la sauce sélectionnée par l'id
         )
-          .then(() => res.status(200).json({ message: "Sauce modifiée!" }))
+          .then(() => {
+            // Supprimez l'ancienne image du serveur une fois la modification effectuée
+            if (req.file && sauce.imageUrl) {
+              const oldImagePath = sauce.imageUrl.replace(
+                `${req.protocol}://${req.get("host")}/images/`,
+                ""
+              );
+              fs.unlink(`images/${oldImagePath}`, (err) => {
+                if (err) {
+                  console.error(err);
+                }
+              });
+            }
+
+            res.status(200).json({ message: "Sauce modifiée!" });
+          })
           .catch((error) => res.status(401).json({ error }));
       }
     })
